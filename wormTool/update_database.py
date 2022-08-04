@@ -92,9 +92,10 @@ def get_single_card(pack, url):
     # print("--------------------------------------------------")
     # print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
 
-    folder_name = "database/" + pack + "/" + card_dict['id']
+    true_rarity = url.split('/')[-1]
+    folder_name = "database/" + pack + "/" + card_dict['id'] + "_" + true_rarity
     os.system("mkdir -p " + folder_name)
-    request.urlretrieve(card_dict['img_url'], filename=folder_name + "/" + card_dict['id'] + ".jpg")
+    request.urlretrieve(card_dict['img_url'], filename=folder_name + "/img.jpg")
     with open(folder_name + "/data.pkl", "wb") as f:
         pickle.dump(card_dict, f)
 
@@ -103,7 +104,7 @@ def get_single_card(pack, url):
 
 def main(pack):
     os.system("mkdir -p database/" + pack)
-    os.system("rm -rf dataabse/" + pack + "/*")
+    os.system("rm -rf database/" + pack + "/*")
 
     request_url = "http://digimon.card.moe/Package/" + pack
     html = request.urlopen(request_url)
