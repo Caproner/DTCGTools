@@ -113,8 +113,15 @@ def main(pack):
     for i in tqdm(range(len(card_list.contents))):
         card = card_list.contents[i]
         card_url = "http://digimon.card.moe" + card.h2.a['href']
-        get_single_card(pack, card_url)
-        time.sleep(random.random() * 5)
+        loop_flag = True
+        while loop_flag:
+            loop_flag = False
+            try:
+                get_single_card(pack, card_url)
+            except Exception as e:
+                print("Error, retry...")
+                loop_flag = True
+            time.sleep(random.random() * 3)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
